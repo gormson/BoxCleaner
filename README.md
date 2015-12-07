@@ -3,10 +3,10 @@
 ## Installation
 
 Pour l'installation, rien de plus simple
-	- Installation des dépendances : apt-get install libxmlrpc-c3-dev
-	- mkdir /opt/boxCleaner
-	- cd /opt/boxCleaner
-	- git clone https://github.com/gormson/BoxCleaner.git
+- Installation des dépendances : apt-get install libxmlrpc-c3-dev
+- mkdir /opt/boxCleaner
+- cd /opt/boxCleaner
+- git clone https://github.com/gormson/BoxCleaner.git
 
 ## Description Générale
 
