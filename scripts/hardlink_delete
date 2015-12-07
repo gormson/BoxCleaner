@@ -1,5 +1,16 @@
 #!/bin/bash
 
+#########################################################################
+#									#
+# Script : hardlink_delete.sh						#
+# Description : Supprime un fichier ou un dossier à partir de son inode	#
+#		permet donc de supprimer aussi les hardlinks		#
+# Input : $1 - fichier ou dossier à supprimer				#
+#									#
+# Auteur : GorMsoN							#
+#                                                                       #
+#########################################################################
+
 #Récupération du répertoire courant du script test_service.sh
 CURRENTPATH=$(readlink -f $(dirname $0))
 
