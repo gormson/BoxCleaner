@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#########################################################################
+#									#
+# Script : reboot_rorrents.sh				        	#
+# Description : Relance le processus rtorrent d'un utilisateur		#
+# Input : $1 - le nom de l'utilisateur          			#
+#									#
+# Auteur : GorMsoN							#
+#                                                                       #
+#########################################################################
 
 #verification qu'il y a bien une variable passée en paramètre
 if [ -z $1 ]
