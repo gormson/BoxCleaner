@@ -79,3 +79,4 @@ Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
 - `liste_torrents_user.sh` : Permet de lister les torrents actifs dans rutorrent/rtorrent pour un utilisateurs passé en paramètre
 - `reboot_rtorrent.sh` : relance un processus `rtorrent` d'un utilisateur passé en paramètre
 - `test_service.sh` : test si `user`-rtorrent est actif pour un utilisateur `user` passé en paramètre
+- `test_arbo.sh`: test si l'arborescence de boxCleaner est conforme.
