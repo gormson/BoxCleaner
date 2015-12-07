@@ -1,5 +1,15 @@
 #!/bin/bash
 
+#########################################################################
+#									#
+# Script : liste_torrents_user.sh					#
+# Description : Listing des torrents actifs pour un utilisateur		#
+# Input : $1 - le nom de l'utilisateur pour le listing			#
+#									#
+# Auteur : GorMsoN							#
+#                                                                       #
+#########################################################################
+
 #Récupération du répertoire courant du script test_service.sh
 CURRENTPATH=$(readlink -f $(dirname $0))
 
