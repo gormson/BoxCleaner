@@ -1,0 +1,23 @@
+Debut du rapport : lundi 7 décembre 2015, 14:23:30 (UTC+0100)
+ 
+CONTENU DU REPERTOIRE /home/gormson/torrents/ :
+________________________________________________
+
+Le contenu type doit être composé de 3 dossiers uniquement : movie, tv et other
+
+/home/gormson/torrents/movie
+/home/gormson/torrents/other
+/home/gormson/torrents/tv
+
+LISTE DES ECARTS ENTRE RUTORRENT ET /home/gormson/torrents/ :
+______________________________________________________________
+
+Liste des torrents dans rutorrent sans fichiers attachés dans /home/gormson/torrents/
+
+
+Liste des fichiers dans /home/gormson/torrents/ sans torrents attachés dans rutorrent
+
+570M	/home/gormson/torrents/tv/Marvel's Agents of S.H.I.E.L.D
+570M	total
+
+Fin du rapport : lundi 7 décembre 2015, 14:23:30 (UTC+0100)
