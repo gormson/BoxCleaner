@@ -14,6 +14,9 @@
 #Inclusion des variables locales
 source default.conf
 
+#Test de l'arborescence des dossiers
+$BASEPATH/$SCRIPTS/test_arbo.sh
+
 #Test du bon demarrage du service rtorrent pour l'utilisateur
 $BASEPATH/$SCRIPTS/test_service.sh $1
 

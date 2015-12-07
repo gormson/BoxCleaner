@@ -1,9 +1,27 @@
 #!/bin/bash
 
-#$1 >> le fichier/dossier à supprimer
+#Récupération du répertoire courant du script test_service.sh
+CURRENTPATH=$(readlink -f $(dirname $0))
 
-#Inclusion des variables globales
-source default.conf
+cd $CURRENTPATH
+cd ..
+
+if [ ! -f default.conf ]
+then
+        echo "Impossible de charger les variables globales, le fichier default.conf n'existe pas"
+        exit
+else
+        #Inclusion des variables globales
+        source default.conf
+fi
+
+#verification qu'il y a bien une variable passée en paramètre
+if [ -z $1 ]
+then
+        echo "Aucun fichier ou dossier spécifié, arrêt de hardlink_delete!"
+        exit
+fi
+
 
 for inode in $(ls -i "$1" | cut -d" " -f1)
 do

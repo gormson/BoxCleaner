@@ -16,6 +16,10 @@
 source  default.conf
 
 echo "Initilialisation des variables globales :"
+
+#Test d'intégrité de l'arborescence
+$BASEPATH/$SCRIPTS/test_arbo.sh
+
 echo "Chemin d'installation : $BASEPATH"
 echo "Repertoire de travail : $TMP"
 echo "Repertoire de stockage des rapports : $RAPPORTS"

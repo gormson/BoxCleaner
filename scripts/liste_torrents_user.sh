@@ -1,8 +1,26 @@
 #!/bin/bash
 
-#Repertoires pas défauts utilisés par le script
-BASEPATH="/home/rootgorm/maintenance"
-DEBUG="debug"
+#Récupération du répertoire courant du script test_service.sh
+CURRENTPATH=$(readlink -f $(dirname $0))
+
+cd $CURRENTPATH
+cd ..
+
+if [ ! -f default.conf ]
+then
+        echo "Impossible de charger les variables globales, le fichier default.conf n'existe pas"
+        exit
+else
+        #Inclusion des variables globales
+        source default.conf
+fi
+
+#verification qu'il y a bien une variable passée en paramètre
+if [ -z $1 ]
+then
+        echo "Aucun utilisateur spécifié, arrêt de liste_torrents_user.sh!"
+        exit
+fi
 
 #Verification que le service est bien lancé pour l'user concerné
 $BASEPATH/test_service.sh $1
