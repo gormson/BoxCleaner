@@ -1,0 +1,9 @@
+#Liste des fichiers à ignorer par git
+#Les fichiers Rapports genere par l'outil
+rapports/
+#Les fichiers Log de suppression
+log/
+#Le dossier debug
+debug/
+#Le fichier listing des utilisateurs
+utilisateurs.list
