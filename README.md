@@ -19,12 +19,12 @@ Création de la liste des utilisateurs
 - sur chaque ligne renseigner un `utilisateur` unique ayant un compte seedbox.
 
 ### Configuration rtorrent/rutorrent
-verifier que dans le ficher `.rtorrent.rc`de chaque utilisateur les informations suivante
+verifier que dans le ficher `.rtorrent.rc`de chaque utilisateur les informations suivantes
 - `scgi_port = 127.0.0.1:PORT`
 - `PORT` est unique pour chaque utilisateur
 
 ### Configuration nginx
-Nginx doit être configuré pour recevoir et aiguiller les requette à rtorrent/rutorrent.
+Nginx doit être configuré pour recevoir et aiguiller les requettes à rtorrent/rutorrent.
 - `nano /etc/nginx/sites-enabled/boxCleaner.conf`
 - renseigner les informations suivantes 
 
@@ -37,28 +37,11 @@ Nginx doit être configuré pour recevoir et aiguiller les requette à rtorrent/
         	}
         }
 
-- Le bloc location est à renseigner pour chaque utilisateur en correspondance avec son `.rtorrent.rc`
+- Le bloc location est à dupliquer et renseigner pour chaque utilisateur en correspondance avec son `.rtorrent.rc`
 
 ## Description Générale
 
 `boxCleaner` est un ensemble de petit script que j'ai écrit pour pouvoir aider à l'entretient des seedbox.
-
-## Scripts
-
-### Les scripts principaux
-
-Les principaux scripts sont les suivants:
-- `boxScanner.sh` : Donne un état de correspondance,pour une liste d'utilisateur, entre rutorrent/rtorrent et l'arborescence /home/`user`/
-- `user_boxScanner.sh` : idem que `boxScanner.sh` mais pour un utilisateur spécifique
-- `boxCleaner.sh` : A partir de la liste des fichiers en trop créée par `boxScanner.sh`, permet d'effacer l'ensemble des fichiers/dossiers identifiés
-
-### Scripts Complémentaires
-
-Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
-- `hardlink_delete` : supprime un fichier ou un dossier à partir de son inode pour supprimer aussi les liens durs éventuellement présents.
-- `liste_torrents_user.sh` : Permet de lister les torrents actifs dans rutorrent/rtorrent pour un utilisateurs passé en paramètre
-- `reboot_rtorrent.sh` : relance un processus `rtorrent` d'un utilisateur passé en paramètre
-- `test_service.sh` : test si `user`-rtorrent est actif pour un utilisateur `user` passé en paramètre
 
 ## Fonctionnement:
 1) Le contenu rutorrent de chaque utilisateurs est listé
@@ -71,9 +54,28 @@ Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
 
 5) L'admin a la possibilité de lancer la suppression de tout ces éléments via `./boxCleaner.sh rapports/cummul_admin`
 
+6) Une page html par utilisateur est créé (par défaut dans `/var/www/rutorrent/logserver/`) sous le nom rapport_`user`.hmtl
+
+7) En complément un rapport admin résumant tous les rapports utilisateurs est créé au même endroit sous le nom `rapport_admin.html`
+
 ## Détections supportées
 1) Un torrent présent dans rutorrent/rtorrent mais sans fichier associé >> `Mineur`, pas de consommation d'espace disque inutile
 
 2) Un fichier présent sur le serveur mais sans torrent associé >> `Majeur`, consommation d'espace disque inutilement
-	
 
+## Scripts
+
+### Les scripts principaux
+
+Les principaux scripts sont les suivants:
+- `boxScanner.sh` : Donne un état de correspondance,pour une liste d'utilisateur passée en paramètre, entre rutorrent/rtorrent et l'arborescence /home/`user`/torrents
+- `user_boxScanner.sh` : idem que `boxScanner.sh` mais pour un utilisateur spécifique
+- `boxCleaner.sh` : A partir de la liste des fichiers en trop créée par `boxScanner.sh`, permet d'effacer l'ensemble des fichiers/dossiers identifiés
+
+### Scripts Complémentaires
+
+Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
+- `hardlink_delete` : supprime un fichier ou un dossier à partir de son inode pour supprimer aussi les liens durs éventuellement présents.
+- `liste_torrents_user.sh` : Permet de lister les torrents actifs dans rutorrent/rtorrent pour un utilisateurs passé en paramètre
+- `reboot_rtorrent.sh` : relance un processus `rtorrent` d'un utilisateur passé en paramètre
+- `test_service.sh` : test si `user`-rtorrent est actif pour un utilisateur `user` passé en paramètre
