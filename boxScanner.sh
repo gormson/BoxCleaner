@@ -12,10 +12,28 @@
 #									#
 #########################################################################
 
-#Inclusion des variables locales
-source  default.conf
 
-echo "Initilialisation des variables globales :"
+#Récupération du répertoire courant du script test_service.sh
+CURRENTPATH=$(readlink -f $(dirname $0))
+
+cd $CURRENTPATH
+
+if [ ! -f default.conf ]
+then
+        echo "Impossible de charger les variables globales, le fichier default.conf n'existe pas"
+        exit
+else
+        #Inclusion des variables globales
+	echo "Initilialisation des variables globales :"
+        source default.conf
+fi
+
+#verification qu'il y a bien une variable passée en paramètre
+if [ -z $1 ]
+then
+        echo "Aucune liste d'utilisateurs spécifié, arrêt de boxScanner.sh!"
+        exit
+fi
 
 #Test d'intégrité de l'arborescence
 $BASEPATH/$SCRIPTS/test_arbo.sh

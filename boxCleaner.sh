@@ -11,9 +11,27 @@
 #                                                                       #
 #########################################################################
 
+#Récupération du répertoire courant du script test_service.sh
+CURRENTPATH=$(readlink -f $(dirname $0))
 
-#Inclusion des variables globales
-source default.conf
+cd $CURRENTPATH
+
+if [ ! -f default.conf ]
+then
+        echo "Impossible de charger les variables globales, le fichier default.conf n'existe pas"
+        exit
+else
+        #Inclusion des variables globales
+        source default.conf
+fi
+
+#verification qu'il y a bien une variable passée en paramètre
+if [ -z $1 ]
+then
+        echo "Aucun listing de fichier en paramètre, arrêt de boxCleaner.sh!"
+        exit
+fi
+
 
 #On utilise le script de suppresion à partir de l'inode du fichier
 #pourquoi l'inode, simplement pour gérer le fichier et surtout les hardlinks 
