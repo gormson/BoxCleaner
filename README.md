@@ -1,5 +1,10 @@
 # BoxCleaner
 
+## Avant-Propos
+
+Ce script est basé sur une installation issue des excellent tutoriel du forum MonDedie.fr
+Il sera donc à adapter suivant vos propres configurations.
+
 ## Installation & Configuration
 
 ### boxCleaner
@@ -55,21 +60,15 @@ Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
 - `reboot_rtorrent.sh` : relance un processus `rtorrent` d'un utilisateur passé en paramètre
 - `test_service.sh` : test si `user`-rtorrent est actif pour un utilisateur `user` passé en paramètre
 
-## Fonctionnement
-
-
-
-
-Script permettant de réaliser une maintenance automatique de votre seedbox.
-Cette maintenance est légère et permet juste de vérifier les incohérences
-
-# Fonctionnement:
+## Fonctionnement:
 	1 - Le contenu rutorrent de chaque utilisateurs est listé
-	2 - Le contenu du dossier /home/<user>/torrents contenant les fichiers/dossiers avec les mêmes noms que les torrents est listé
+	2 - Le contenu du dossier /home/`user`/torrents contenant les fichiers/dossiers avec les mêmes noms que les torrents est listé
 	3 - Les deux listes sont comparées pour vérifier les incohérences
+	4 - Un fichier d'ecart est créé (`./rapports/cummul_admin`) pour lister les fichiers sans attaches avec rutorrent/rtorrent
+	5 - L'admin a la possibilité de lancer la suppression de tout ces éléments via `./boxCleaner.sh rapports/cummul_admin`
 	
-# Détections supportées
-	1 - Un torrent présent dans rutorrent/rtorrent mais sans fichier associé >> Mineur, pas de consommation d'espace disque inutile
-	2 - Un fichier présent sur le serveur mais sans torrent associé >> Majeur, consommation d'espace disque inutilement
+## Détections supportées
+	1 - Un torrent présent dans rutorrent/rtorrent mais sans fichier associé >> `Mineur`, pas de consommation d'espace disque inutile
+	2 - Un fichier présent sur le serveur mais sans torrent associé >> `Majeur`, consommation d'espace disque inutilement
 	
 
