@@ -62,8 +62,11 @@ Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
 
 ## Fonctionnement:
 1 - Le contenu rutorrent de chaque utilisateurs est listé
+
 2 - Le contenu du dossier /home/`user`/torrents contenant les fichiers/dossiers avec les mêmes noms que les torrents est listé
+
 3 - Les deux listes sont comparées pour vérifier les incohérences
+
 4 - Un fichier d'ecart est créé (`./rapports/cummul_admin`) pour lister les fichiers sans attaches avec rutorrent/rtorrent
 5 - L'admin a la possibilité de lancer la suppression de tout ces éléments via `./boxCleaner.sh rapports/cummul_admin`
 	
