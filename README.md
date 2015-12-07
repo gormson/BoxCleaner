@@ -61,14 +61,14 @@ Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
 - `test_service.sh` : test si `user`-rtorrent est actif pour un utilisateur `user` passé en paramètre
 
 ## Fonctionnement:
-	1 - Le contenu rutorrent de chaque utilisateurs est listé
-	2 - Le contenu du dossier /home/`user`/torrents contenant les fichiers/dossiers avec les mêmes noms que les torrents est listé
-	3 - Les deux listes sont comparées pour vérifier les incohérences
-	4 - Un fichier d'ecart est créé (`./rapports/cummul_admin`) pour lister les fichiers sans attaches avec rutorrent/rtorrent
-	5 - L'admin a la possibilité de lancer la suppression de tout ces éléments via `./boxCleaner.sh rapports/cummul_admin`
+1 - Le contenu rutorrent de chaque utilisateurs est listé
+2 - Le contenu du dossier /home/`user`/torrents contenant les fichiers/dossiers avec les mêmes noms que les torrents est listé
+3 - Les deux listes sont comparées pour vérifier les incohérences
+4 - Un fichier d'ecart est créé (`./rapports/cummul_admin`) pour lister les fichiers sans attaches avec rutorrent/rtorrent
+5 - L'admin a la possibilité de lancer la suppression de tout ces éléments via `./boxCleaner.sh rapports/cummul_admin`
 	
 ## Détections supportées
-	1 - Un torrent présent dans rutorrent/rtorrent mais sans fichier associé >> `Mineur`, pas de consommation d'espace disque inutile
-	2 - Un fichier présent sur le serveur mais sans torrent associé >> `Majeur`, consommation d'espace disque inutilement
+1 - Un torrent présent dans rutorrent/rtorrent mais sans fichier associé >> `Mineur`, pas de consommation d'espace disque inutile
+2 - Un fichier présent sur le serveur mais sans torrent associé >> `Majeur`, consommation d'espace disque inutilement
 	
 
