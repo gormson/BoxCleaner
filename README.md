@@ -20,39 +20,40 @@ verifier que dans le ficher `.rtorrent.rc`de chaque utilisateur les informations
 
 ### Configuration nginx
 Nginx doit être configuré pour recevoir et aiguiller les requette à rtorrent/rutorrent.
-- 'nano /etc/nginx/sites-enabled/boxCleaner.conf
-- renseigner les informations suivantes (le bloc location est à renseigner pour chaque utilisateur en correspondance avec son `.rtorrent.rc`)
-
+- `nano /etc/nginx/sites-enabled/boxCleaner.conf`
+- renseigner les informations suivantes 
 
         server {
         	listen      80;
         	server_name localhost;
-        	location /gormson {
+        	location /user {
             		include scgi_params;
             		scgi_pass 127.0.0.1:PORT; 
         	}
         }
 
+- Le bloc location est à renseigner pour chaque utilisateur en correspondance avec son `.rtorrent.rc`
+
 ## Description Générale
 
-boxCleaner est un ensemble de petit script que j'ai écrit pour pouvoir aider à l'entretient des seedbox.
+`boxCleaner` est un ensemble de petit script que j'ai écrit pour pouvoir aider à l'entretient des seedbox.
 
 ## Scripts
 
 ### Les scripts principaux
 
 Les principaux scripts sont les suivants:
-- boxScanner.sh : Donne un état de correspondance,pour une liste d'utilisateur, entre rutorrent/rtorrent et l'arborescence /home/<user>/
-- user_boxScanner.sh : idem que boxScanner.sh mais pour un utilisateur spécifique
-- boxCleaner.sh : A partir de la liste des fichiers en trop créée par boxScanner.sh, permet d'effacer l'ensemble des fichiers/dossiers identifiés
+- `boxScanner.sh` : Donne un état de correspondance,pour une liste d'utilisateur, entre rutorrent/rtorrent et l'arborescence /home/`user`/
+- `user_boxScanner.sh` : idem que `boxScanner.sh` mais pour un utilisateur spécifique
+- `boxCleaner.sh` : A partir de la liste des fichiers en trop créée par `boxScanner.sh`, permet d'effacer l'ensemble des fichiers/dossiers identifiés
 
 ### Scripts Complémentaires
 
 Pour le bon fonctionnement de boxCleaner, les outils suivants sont utilisés
-- hardlink_delete = supprime un fichier ou un dossier à partir de son inode pour supprimer aussi les liens durs éventuellement présents.
-- liste_torrents_user.sh : Permet de lister les torrents actifs dans rutorrent/rtorrent pour un utilisateurs passé en paramètre
-- reboot_rtorrent.sh : relance un processus rtorrent d'un utilisateur passé en paramètre
-- test_service.sh : test si `user`-rtorrent est actif pour un utilisateur `user` passé en paramètre
+- `hardlink_delete` : supprime un fichier ou un dossier à partir de son inode pour supprimer aussi les liens durs éventuellement présents.
+- `liste_torrents_user.sh` : Permet de lister les torrents actifs dans rutorrent/rtorrent pour un utilisateurs passé en paramètre
+- `reboot_rtorrent.sh` : relance un processus `rtorrent` d'un utilisateur passé en paramètre
+- `test_service.sh` : test si `user`-rtorrent est actif pour un utilisateur `user` passé en paramètre
 
 ## Fonctionnement
 
