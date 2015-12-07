@@ -15,23 +15,23 @@ Création de la liste des utilisateurs
 
 ### Configuration rtorrent/rutorrent
 verifier que dans le ficher `.rtorrent.rc`de chaque utilisateur les informations suivante
-- scgi_port = 127.0.0.1:PORT
-- PORT est unique pour chaque utilisateur
+- `scgi_port = 127.0.0.1:PORT`
+- `PORT` est unique pour chaque utilisateur
 
 ### Configuration nginx
 Nginx doit être configuré pour recevoir et aiguiller les requette à rtorrent/rutorrent.
 - 'nano /etc/nginx/sites-enabled/boxCleaner.conf
 - renseigner les informations suivantes (le bloc location est à renseigner pour chaque utilisateur en correspondance avec son `.rtorrent.rc`)
 
-server {
-        listen      80;
-        server_name localhost;
+	server {
+        	listen      80;
+        	server_name localhost;
 
-        location /gormson {
-            include scgi_params;
-            scgi_pass 127.0.0.1:PORT;
-        }
-}
+        	location /gormson {
+            		include scgi_params;
+            		scgi_pass 127.0.0.1:PORT;
+        	}
+	}
 
 ## Description Générale
 
