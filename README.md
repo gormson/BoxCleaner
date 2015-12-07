@@ -9,7 +9,7 @@ Il sera donc à adapter suivant vos propres configurations.
 
 ### boxCleaner
 - Installation des dépendances : `apt-get install libxmlrpc-c3-dev`
-- `mkdir /opt/boxCleaner`
+- `mkdir /opt/boxCleaner` (ou autre mais vous devrez modifier le dossier d'installation dans le fichier `default.conf`)
 - `cd /opt/boxCleaner`
 - `git clone https://github.com/gormson/BoxCleaner.git`
 
