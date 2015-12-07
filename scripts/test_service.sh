@@ -1,7 +1,18 @@
 #!/bin/bash
 
-#Repertoires pas défauts utilisés par le script
-BASEPATH="/home/rootgorm/maintenance"
+#########################################################################
+#									#
+# Script : test_service.sh						#
+# Description : permet de tester si le service rtorrent d'un utilisateur#
+#		passé en paramètre est actif ou non. Si non, le service	#
+#		correspondant est relancé.				#
+# Input : $1 - le nom d'utilisateur à tester				#
+# Auteur : GorMsoN							#
+#                                                                       #
+#########################################################################
+
+#Inclusion des variables globales
+source default.conf
 
 #Nom du service recherché
 SERVICE="$1-rtorrent"
