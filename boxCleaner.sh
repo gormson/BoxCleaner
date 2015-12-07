@@ -41,7 +41,12 @@ echo "$(date) : Début du Nettoyage des fichiers orphelins..."
 
 while IFS="" read -r filetodelete || [[ -n "$filetodelete" ]]
 do
-        $BASEPATH/$SCRIPTS/hardlink_delete "$filetodelete"
+        if [[ -f "$filetodelete" -o -d "$filetodelete" ]]
+        then
+                $BASEPATH/$SCRIPTS/hardlink_delete "$filetodelete"
+        else
+                echo "$(date) : $filetodelete n'est pas un fichier ou un dossier"
+        fi
 done < ${1}
 
 printf "$(date) : Traitement de la liste de fichiers/dossiers terminée.\n" >> $BASEPATH/$LOG/boxCleaner.log
