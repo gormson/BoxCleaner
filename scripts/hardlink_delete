@@ -33,12 +33,13 @@ then
         exit
 fi
 
-
 for inode in $(ls -i "$1" | cut -d" " -f1)
 do
-	#Si l'inode correspond à un sous dossier on relance hardlink_delete
+
+	#Si l'inode correspond à un sous dossier on relance hardlink_delete (recursif mode engaged)
 	if [ -d "$(find /home/ -inum $inode)" ]
 	then
+
 		$BASEPATH/$SCRIPTS/hardlink_delete "$(find /home/ -inum $inode)"
 
 		#Verification de la bonne suppression du fichier
@@ -51,13 +52,12 @@ do
 		fi
 
 	#Si l'inode correspond à un fichier standard on le supprime de manière classique
-	elif [ -f "$(find /home/ -inum $inode)" ]
-	then
+	else
 
 	        echo "Date : $(date)" >> $BASEPATH/$LOG/boxCleaner.log 
 		echo "Type : Suppression Inode $inode" >> $BASEPATH/$LOG/boxCleaner.log
 		echo "Fichier :  $(find /home/ -inum $inode)" >> $BASEPATH/$LOG/boxCleaner.log
-        	#find /home/ -inum $inode -exec rm -i "{}" \;
+        	find /home/ -inum $inode -exec rm -i "{}" \;
 
 		#Verification de la bonne suppression du fichier
 		if [ -f "$1" ]
@@ -73,10 +73,11 @@ done
 
 if [ -d "$1" ]
 then
+
         echo "Date : $(date)" >> $BASEPATH/$LOG/boxCleaner.log
 	echo "Type : Suppression du Dossier" >> $BASEPATH/$LOG/boxCleaner.log
 	echo "Dossier : $1" >> $BASEPATH/$LOG/boxCleaner.log
-        #rmdir "$1"
+        rmdir "$1"
 
         if [ -d "$1" ]
         then
