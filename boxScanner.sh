@@ -35,6 +35,21 @@ then
         exit
 fi
 
+#verification qu'il y a bien une variable passée en paramètre
+if [ ! $# -eq 2 ]
+then
+        echo "Nombre d'arguments user_boxScanner.sh non conforme, arrêt de boxScanner.sh!"
+        exit
+elif [ ! -f "${1}" ]
+then
+        echo "La liste d'utilisateurs spécifié n'existe pas, arrêt de boxScanner.sh!"
+        exit
+elif [ ! -f "${2}" ]
+then
+        echo "Le fichier d'arborescence spécifié n'existe pas, arrêt de boxScanner.sh!"
+        exit
+fi
+
 #Test d'intégrité de l'arborescence
 $BASEPATH/$SCRIPTS/test_arbo.sh
 
@@ -60,7 +75,8 @@ echo "Début de l'analyse"
 for user in $(more $1)
 do
 	echo "$(date) : Traitement utilisateur $user..."
-	$BASEPATH/user_boxScanner.sh "$user" > /dev/null 2>&1
+	$BASEPATH/user_boxScanner.sh "$user" "${2}" > /dev/null 2>&1
+
 done 
 
 printf "Espace disque total gaspillé : " >> $BASEPATH/$RAPPORTS/rapport_admin

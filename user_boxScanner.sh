@@ -32,9 +32,9 @@ if [ ! $# -eq 2 ]
 then
 	echo "Nombre d'arguments user_boxScanner.sh non conforme, arrêt de user_boxScanner.sh!"
 	exit
-elif [ ! -f "${1}" ]
+elif [ ! -d "/home/${1}" ]
 then
-        echo "Le fichier d'utilisateurs spécifié n'existe pas, arrêt de user_boxScanner.sh!"
+        echo "L'utilisateurs spécifié n'existe pas, arrêt de user_boxScanner.sh!"
         exit
 elif [ ! -f "${2}" ]
 then
@@ -57,10 +57,20 @@ done
 #Au cas où on supprime les lignes vide du fichier
 sed -i '/^$/d' $BASEPATH/$TMP/filepathrutorrent_$1
 
-#Liste des telechargements pour un utilisateur
-ls -d /home/$1/torrents/tv/* > $BASEPATH/$TMP/filepathserver_$1
-ls -d /home/$1/torrents/movie/* >> $BASEPATH/$TMP/filepathserver_$1
-ls -d /home/$1/torrents/other/* >> $BASEPATH/$TMP/filepathserver_$1
+#Liste des telechargements pour un utilisateur suivant arbo utilisateur
+while IFS="" read -r line || [[ -n "$line" ]]
+do
+        printf "%b\n" "/home/${1}/${line}" >> $BASEPATH/$TMP/filtre_arbo_$1
+        ls -d /home/${1}/"$line"/*
+done < ${2} > $BASEPATH/$TMP/filepathserver_$1_tmp
+
+comm -3 <(sort $BASEPATH/$TMP/filepathserver_$1_tmp) <(sort tmp/filtre_arbo_$1) | cut -f1 | sed '/^$/d' > $BASEPATH/$TMP/filepathserver_$1
+rm tmp/filtre_arbo_$1
+rm $BASEPATH/$TMP/filepathserver_$1_tmp
+
+#ls -d /home/$1/torrents/tv/* > $BASEPATH/$TMP/filepathserver_$1
+#ls -d /home/$1/torrents/movie/* >> $BASEPATH/$TMP/filepathserver_$1
+#ls -d /home/$1/torrents/other/* >> $BASEPATH/$TMP/filepathserver_$1
 
 #Nettoyage des caracteres echappes par xmlrpc en UTF8
 while IFS="" read -r line || [[ -n "$line" ]]
@@ -119,6 +129,12 @@ more $BASEPATH/$TMP/listefichiers_$1 >> $BASEPATH/$RAPPORTS/cummul_admin
 #Récupération de la taille de chaques fichier et somme de l'ensemble
 xargs --arg-file=$BASEPATH/$TMP/listefichiers_$1 -0 --delimiter=\\n du -hsc >> $BASEPATH/$RAPPORTS/rapport_$1
 printf "\n" >> $BASEPATH/$RAPPORTS/rapport_$1
+
+#Recuperation de la liste des torrents et classement par date de dernier accès
+$BASEPATH/user_boxLastAccess.sh "$1"
+printf "TORRENTS ACTIFS CLASSES PAR DATE DE DERNIER ACCES :\n" >> $BASEPATH/$RAPPORTS/rapport_$1
+printf "___________________________________________________\n\n" >> $BASEPATH/$RAPPORTS/rapport_$1
+more $BASEPATH/$TMP/filenamerutorrent_$1 >> $BASEPATH/$RAPPORTS/rapport_$1
 
 dateheure=$(date)
 printf "Fin du rapport : $dateheure\n" >> $BASEPATH/$RAPPORTS/rapport_$1
