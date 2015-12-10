@@ -7,3 +7,5 @@ log/
 debug/
 #Le fichier listing des utilisateurs
 utilisateurs.list
+repertoires.list
+
