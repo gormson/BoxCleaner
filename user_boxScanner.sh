@@ -7,6 +7,7 @@
 # Description : Permet la préparation à la maintenance rutorrent/torrent#
 #		pour pour 1 utilisateur donné				#
 # Input : $1 - Nom de l'utilisateur à traiter				#
+#	  $2 - Arboresence à scanner					#
 # Auteur : GorMsoN                                                      #
 #                                                                       #
 #########################################################################
@@ -27,9 +28,17 @@ else
 fi
 
 #verification qu'il y a bien une variable passée en paramètre
-if [ -z $1 ]
+if [ ! $# -eq 2 ]
 then
-        echo "Aucun utilisateur spécifié, arrêt de user_boxScanner.sh!"
+	echo "Nombre d'arguments user_boxScanner.sh non conforme, arrêt de user_boxScanner.sh!"
+	exit
+elif [ ! -f "${1}" ]
+then
+        echo "Le fichier d'utilisateurs spécifié n'existe pas, arrêt de user_boxScanner.sh!"
+        exit
+elif [ ! -f "${2}" ]
+then
+        echo "Le fichier d'arborescence spécifié n'existe pas, arrêt de user_boxScanner.sh!"
         exit
 fi
 
