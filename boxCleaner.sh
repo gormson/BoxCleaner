@@ -12,9 +12,9 @@
 #########################################################################
 
 #Récupération du répertoire courant du script test_service.sh
-CURRENTPATH=$(readlink -f $(dirname $0))
+CURRENTPATH=$(readlink -f "$(dirname "$0")")
 
-cd $CURRENTPATH
+cd "$CURRENTPATH" || exit
 
 if [ ! -f default.conf ]
 then
@@ -22,11 +22,12 @@ then
         exit
 else
         #Inclusion des variables globales
+	# shellcheck disable=SC1091
         source default.conf
 fi
 
 #verification qu'il y a bien une variable passée en paramètre
-if [ -z $1 ]
+if [ -z "$1" ]
 then
         echo "Aucun listing de fichier en paramètre, arrêt de boxCleaner.sh!"
         exit
@@ -43,13 +44,14 @@ while IFS="" read -r filetodelete || [[ -n "$filetodelete" ]]
 do
         if [ -f "$filetodelete" ] || [ -d "$filetodelete" ]
         then
-                $BASEPATH/$SCRIPTS/hardlink_delete "$filetodelete"
+                "$BASEPATH"/"$SCRIPTS"/hardlink_delete "$filetodelete"
         else
-                echo "$(date) : $filetodelete n'est pas un fichier ou un dossier"
+                echo "%s : $filetodelete n'est pas un fichier ou un dossier" "$(date)"
         fi
-done < ${1}
+done < "${1}"
 
-printf "$(date) : Traitement de la liste de fichiers/dossiers terminée.\n" >> $BASEPATH/$LOG/boxCleaner.log
-printf "\n" >> $BASEPATH/$LOG/boxCleaner.log
+printf "%s : Traitement de la liste de fichiers/dossiers terminée.\n" "$(date)" >> "$BASEPATH"/"$LOG"/boxCleaner.log
+printf "\n" >> "$BASEPATH"/"$LOG"/boxCleaner.log
+
 
 echo "$(date) : Fin du Nettoyage des fichiers orphelins."

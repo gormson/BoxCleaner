@@ -11,9 +11,9 @@
 #########################################################################
 
 #Récupération du répertoire courant du script test_service.sh
-CURRENTPATH=$(readlink -f $(dirname $0))
+CURRENTPATH=$(readlink -f "$(dirname "$0")")
 
-cd $CURRENTPATH
+cd "$CURRENTPATH" || exit
 
 if [ ! -f default.conf ]
 then
@@ -22,7 +22,8 @@ then
 else
         #Inclusion des variables globales
         echo "Initilialisation des variables globales :"
-        source default.conf
+        # shellcheck disable=SC1091
+	source default.conf
 fi
 
 #verification qu'il y a bien une variable passée en paramètre
@@ -37,25 +38,25 @@ then
 fi
 
 #Test de l'arborescence des dossiers
-$BASEPATH/$SCRIPTS/test_arbo.sh
+"$BASEPATH"/"$SCRIPTS"/test_arbo.sh
 
 #Test du bon demarrage du service rtorrent pour l'utilisateur
-$BASEPATH/$SCRIPTS/test_service.sh $1
+"$BASEPATH"/"$SCRIPTS"/test_service.sh "$1"
 
 #Recuperation de l'ensemble des HASH des torrents presents dans rutorrent/rtorrent pour un utilisateur
-for hash_torrent in $(xmlrpc localhost/$1 download_list | grep Index | cut -d\' -f2)
+for hash_torrent in $(xmlrpc localhost/"$1" download_list | grep Index | cut -d\' -f2)
 do
-      	IDTEMPS=$(xmlrpc localhost/$1 f.get_last_touched $hash_torrent:f0 | tail -1 | cut -d " " -f3)
+      	IDTEMPS=$(xmlrpc localhost/"$1" f.get_last_touched "$hash_torrent":f0 | tail -1 | cut -d " " -f3)
 	IDTEMPS=$(echo "scale=6; $IDTEMPS/1000000" | bc)
 	LASTTOUCHED=$(date --date=@"$IDTEMPS" "+%Y-%m-%d %H:%M:%S")
 
-	printf "$LASTTOUCHED " >> $BASEPATH/$TMP/filenamerutorrent_$1
-	printf "%b\n" "$(xmlrpc localhost/$1 d.get_name $hash_torrent | grep "String\:" | cut -d\' -f2)" >> $BASEPATH/$TMP/filenamerutorrent_$1
+	printf "%s " "$LASTTOUCHED" >> "$BASEPATH"/"$TMP"/filenamerutorrent_"$1"
+	printf "%b\n" "$(xmlrpc localhost/"$1" d.get_name "$hash_torrent" | grep "String\:" | cut -d\' -f2)" >> "$BASEPATH"/"$TMP"/filenamerutorrent_"$1"
 
 done
 
 #Au cas où on supprime les lignes vide du fichier
-sed -i '/^$/d' $BASEPATH/$TMP/filenamerutorrent_$1
+sed -i '/^$/d' "$BASEPATH"/"$TMP"/filenamerutorrent_"$1"
 #sed -i '/^$/d' $BASEPATH/$TMP/lasttouched_$1
 
 
