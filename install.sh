@@ -82,13 +82,13 @@ else
 		#On recopie le dossier depuis /tmp/ vers /opt/ OU le chemin personnalisé
 		echo ""
 		echo -e "${CBLUE}Recopie du Répertoire boxCleaner${CEND}"
-		echo -e "${CYELLOW}cp -r ../BoxCleaner $CHEMIN/boxCleaner${CEND}"
+		echo -e "${CYELLOW}cp -r ../BoxCleaner $CHEMIN${CEND}"
 		cp -r ../BoxCleaner/* "$CHEMIN"
 
 		 #On rend exécutable les scripts
 		echo ""
 		echo -e "${CBLUE}Passage des scripts en executables${CEND}"
-		echo -e "${CYELLOW}chmod +x $CHEMIN/boxCleaner/*.sh && chmod +x $CHEMIN/boxCleaner/scripts/*.sh{CEND}"
+		echo -e "${CYELLOW}chmod +x $CHEMIN/*.sh && chmod +x $CHEMIN/scripts/*.sh{CEND}"
 		chmod +x "$CHEMIN"/*.sh && chmod +x "$CHEMIN"/scripts/*.sh
 
 		#Création de la liste des utilisateurs
@@ -183,6 +183,9 @@ else
 
 		#on ferme l'accolade du fichier nginx
 		printf "	}" >> $NGINX/boxCleaner.conf
+
+		echo -e "${CBLUE}Restart Nginx pour prise en compte du fichier boxCleaner.conf${CEND}"
+		service nginx restart
 
 		DOSSIER="temp"
 		echo ""
