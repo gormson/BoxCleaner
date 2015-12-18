@@ -16,6 +16,7 @@
 CURRENTPATH=$(readlink -f "$(dirname "$0")")
 
 cd "$CURRENTPATH" || exit
+cd ..
 
 if [ ! -f default.conf ]
 then
@@ -91,7 +92,6 @@ done < "$BASEPATH"/"$TMP"/filepathrutorrent_"$1" > "$BASEPATH"/"$TMP"/filepathru
 	printf "Contenu du dossier de téléchargement torrents\n" 
 	printf "\n"
 
-
 	ls -d /home/"$1"/torrents/*
 
 	printf "\n"
@@ -140,7 +140,7 @@ more "$BASEPATH"/"$TMP"/listefichiers_"$1" >> "$BASEPATH"/"$RAPPORTS"/cummul_adm
 } >> "$BASEPATH"/"$RAPPORTS"/rapport_"$1"
 
 #Recuperation de la liste des torrents et classement par date de dernier accès
-"$BASEPATH"/user_boxLastAccess.sh "$1"
+"$BASEPATH"/"$SCRIPTS"/user_boxLastAccess.sh "$1"
 {
 	printf "TORRENTS ACTIFS CLASSES PAR DATE DE DERNIER ACCES :\n"
 	printf "___________________________________________________\n\n"

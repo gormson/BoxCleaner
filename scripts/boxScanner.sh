@@ -19,6 +19,7 @@
 CURRENTPATH=$(readlink -f "$(dirname "$0")")
 
 cd "$CURRENTPATH" || exit
+cd .. || exit
 
 if [ ! -f default.conf ]
 then
@@ -78,7 +79,7 @@ echo -e "${CBLUE}Début de l'analyse${CEND}"
 for user in $(more "$1")
 do
 	printf "${CYELLOW}%s : Traitement utilisateur %s...\n${CEND}" "$(date)" "$user"
-	"$BASEPATH"/user_boxScanner.sh "$user" "${2}" > /dev/null 2>&1
+	"$BASEPATH"/"$SCRIPTS"/user_boxScanner.sh "$user" "${2}" > /dev/null 2>&1
 
 done 
 

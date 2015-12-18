@@ -15,6 +15,7 @@
 CURRENTPATH=$(readlink -f "$(dirname "$0")")
 
 cd "$CURRENTPATH" || exit
+cd ..
 
 if [ ! -f default.conf ]
 then

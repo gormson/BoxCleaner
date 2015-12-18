@@ -25,7 +25,7 @@ else
 fi
 
 CHOIX="Temp"
-while [ "$CHOIX" == "9" ]
+while [ ! "$CHOIX" == "9" ]
 do
 clear
 echo -e "${CRED}
@@ -125,9 +125,11 @@ case $CHOIX in
 			read -r OKSUPP
 			if [ "$OKSUPP" == "O" ] || ["$OKSUPP" == "o" ]
 			then
+
 				echo -e "${CGREEN}Début de la suppression des fichiers...${CEND}"
 				"$BASEPATH"/"$SCRIPTS"/boxEraser.sh "$BASEPATH"/"$RAPPORTS"/cummul_admin
 				echo -e "${CGREEN}Fin de la suppression des fichiers...${CEND}"
+
 			elif [ "$OKSUPP" == "N" ] || ["$OKSUPP" == "n" ]
 			then
 				echo -e "${CGREEN}Abandon de la suppression, sage décision Padawan${CEND}"
@@ -181,9 +183,11 @@ case $CHOIX in
                         read -r OKSUPP
                         if [ "$OKSUPP" == "O" ] || ["$OKSUPP" == "o" ]
                         then
+
                                 echo -e "${CGREEN}Début de la suppression...${CEND}"
                                 "$BASEPATH"/"$SCRIPTS"/hardlink_delete.sh "$CIBLE"
                                 echo -e "${CGREEN}Fin de la suppression...${CEND}"
+
                         elif [ "$OKSUPP" == "N" ] || ["$OKSUPP" == "n" ]
                         then
                                 echo -e "${CGREEN}Abandon de la suppression, sage décision Padawan${CEND}"
