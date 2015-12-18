@@ -50,6 +50,12 @@ fi
 #Test du bon demarrage du service rtorrent pour l'utilisateur
 "$BASEPATH"/"$SCRIPTS"/test_service.sh "$1"
 
+#On verifie si un rapport précédent existe
+if [ -f "$BASEPATH"/"$RAPPORTS"/rapport_"$1" ]
+then
+	rm "$BASEPATH"/"$RAPPORTS"/rapport_"$1"
+fi
+
 echo -e "${CBLUE}Extraction de la liste des torrents${CEND}"
 
 #Recuperation de l'ensemble des HASH des torrents presents dans rutorrent/rtorrent pour un utilisateur

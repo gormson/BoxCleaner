@@ -57,10 +57,12 @@ fi
 #Test d'intégrité de l'arborescence
 "$BASEPATH"/"$SCRIPTS"/test_arbo.sh
 
+echo ""
 echo -e "${CBLUE}Chemin d'installation : $BASEPATH${CEND}"
 echo -e "${CBLUE}Repertoire de travail : $TMP${CEND}"
 echo -e "${CBLUE}Repertoire de stockage des rapports : $RAPPORTS${CEND}"
 echo -e "${CBLUE}Nettoyage des Rapports Admin...${CEND}"
+echo ""
 
 #on vérifie si un rapport admin existe pour le supprimer
 if [ -f "$BASEPATH"/"$RAPPORTS"/rapport_admin ]

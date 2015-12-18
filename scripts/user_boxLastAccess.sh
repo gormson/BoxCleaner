@@ -44,6 +44,11 @@ fi
 #Test du bon demarrage du service rtorrent pour l'utilisateur
 "$BASEPATH"/"$SCRIPTS"/test_service.sh "$1"
 
+if [ -f "$BASEPATH"/"$TMP"/filenamerutorrent_"$1" ]
+then
+	rm "$BASEPATH"/"$TMP"/filenamerutorrent_"$1"
+fi
+
 echo -e "${CBLUE}Extraction de la liste des torrents et classement${CEND}"
 #Recuperation de l'ensemble des HASH des torrents presents dans rutorrent/rtorrent pour un utilisateur
 for hash_torrent in $(xmlrpc localhost/"$1" download_list | grep Index | cut -d\' -f2)
@@ -60,5 +65,5 @@ done
 #Au cas où on supprime les lignes vide du fichier
 sed -i '/^$/d' "$BASEPATH"/"$TMP"/filenamerutorrent_"$1"
 
-
+more "$BASEPATH"/"$TMP"/filenamerutorrent_"$1" | sort
 

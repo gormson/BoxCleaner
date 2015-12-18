@@ -39,7 +39,7 @@ fi
 #pourquoi l'inode, simplement pour gérer le fichier et surtout les hardlinks 
 #et donc libérer vraiment l'espace
 
-printf "${CGREEN}%s : Début du Nettoyage des fichiers orphelins...${CEND}" "$(date)"
+printf "${CGREEN}%s : Début du Nettoyage des fichiers orphelins...\n${CEND}" "$(date)"
 
 while IFS="" read -r filetodelete || [[ -n "$filetodelete" ]]
 do
@@ -48,7 +48,7 @@ do
         then
                 "$BASEPATH"/"$SCRIPTS"/hardlink_delete "$filetodelete"
         else
-               printf "${CRED}%s : $filetodelete n'est pas un fichier ou un dossier${CEND}" "$(date)"
+               printf "${CRED}%s : $filetodelete n'est pas un fichier ou un dossier${CEND}\n" "$(date)"
         fi
 done < "${1}"
 

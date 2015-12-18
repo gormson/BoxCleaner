@@ -1,12 +1,11 @@
 #!/bin/bash
 
-#Répertoire d'installation
-CHEMIN="/home/rootgorm/maintenance/installation"
+#Répertoire d'installation par défaut
+CHEMIN="/opt/"
 #Chemin d'installation complet
 BASEPATH="$CHEMIN"/"boxCleaner"
-#Répertoire des fichiers de configuration Nginx
-NGINX="/home/rootgorm/maintenance/installation"
-#NGINX="/etc/nginx/sites-enabled"
+#Répertoire des fichiers de configuration Nginx"
+NGINX="/etc/nginx/sites-enabled"
 #Repertoire de stockage des rapports html
 LOGSERVER="/var/www/rutorrent/logserver"
 RUTORRENT="/var/www/rutorrent"
@@ -260,10 +259,16 @@ else
 			echo -e "${CGREEN}Répertoire $LOGSERVER : OK${CEND}"
 		fi
 
+		#Suppression des lignes de configuration utilisateur par défaut pour les remplacer par celles de l'installation courante
+		tac default.conf | sed '1,2d' | tac > default.conf.new
+		rm default.conf
+		more default.conf.new > default.conf
+		rm default.conf.new
+
 		echo ""
 		echo -e "${CBLUE}Ajout des paramètres à default.conf${CEND}"
 		{
-			printf "\n#Paramètres utilisateur\n"
+			printf "\n#Paramètres utilisateur (installation auto)\n"
 			printf "BASEPATH=\"%b\"\n" "$CHEMIN" 
 			printf "PATHHTML=\"%b\"\n" "$LOGSERVER"
 		} >> "$CHEMIN"/default.conf

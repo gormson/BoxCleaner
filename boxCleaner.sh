@@ -54,7 +54,7 @@ case $CHOIX in
 	1)
 		if [ -f "$BASEPATH"/utilisateurs.list ] && [ -f "$BASEPATH"/repertoires.list ]
 		then
-			"$BASEPATH"/"$SCRIPTS"/boxScanner utilisateurs.list repertoires.list
+			"$BASEPATH"/"$SCRIPTS"/boxScanner.sh utilisateurs.list repertoires.list
 		else
 			if [ ! -f "$BASEPATH"/utilisateurs.list ]
 			then
@@ -123,14 +123,14 @@ case $CHOIX in
 			echo -e "${CGREEN}Attention!! L'opération suivante va effacer l'ensemble des fichiers du listing cummul_admin${CEND}"
 			echo -e -n "${CRED}Etes vous sûr de vouloir continuer? (O/n) ${CEND}"
 			read -r OKSUPP
-			if [ "$OKSUPP" == "O" ] || ["$OKSUPP" == "o" ]
+			if [ "$OKSUPP" == "O" ] || [ "$OKSUPP" == "o" ]
 			then
 
 				echo -e "${CGREEN}Début de la suppression des fichiers...${CEND}"
 				"$BASEPATH"/"$SCRIPTS"/boxEraser.sh "$BASEPATH"/"$RAPPORTS"/cummul_admin
 				echo -e "${CGREEN}Fin de la suppression des fichiers...${CEND}"
 
-			elif [ "$OKSUPP" == "N" ] || ["$OKSUPP" == "n" ]
+			elif [ "$OKSUPP" == "N" ] || [ "$OKSUPP" == "n" ]
 			then
 				echo -e "${CGREEN}Abandon de la suppression, sage décision Padawan${CEND}"
 			else
@@ -179,16 +179,16 @@ case $CHOIX in
 		then
 			OKSUPP="TEMP"
 			echo -e "${CGREEN}Attention!! L'opération suivante va effacer définitivement le fichier ou dossier spécifé!!${CEND}"
-                        echo -e -n "${CRED}Etes vous sûr de vouloir continuer? (O/n) ${CEND}"
+                        printf "${CRED}Etes vous sûr de vouloir continuer? (O/n) ${CEND}"
                         read -r OKSUPP
-                        if [ "$OKSUPP" == "O" ] || ["$OKSUPP" == "o" ]
+                        if [ "$OKSUPP" == "O" ] || [ "$OKSUPP" == "o" ]
                         then
 
                                 echo -e "${CGREEN}Début de la suppression...${CEND}"
-                                "$BASEPATH"/"$SCRIPTS"/hardlink_delete.sh "$CIBLE"
+                                "$BASEPATH"/"$SCRIPTS"/hardlink_delete "$CIBLE"
                                 echo -e "${CGREEN}Fin de la suppression...${CEND}"
 
-                        elif [ "$OKSUPP" == "N" ] || ["$OKSUPP" == "n" ]
+                        elif [ "$OKSUPP" == "N" ] || [ "$OKSUPP" == "n" ]
                         then
                                 echo -e "${CGREEN}Abandon de la suppression, sage décision Padawan${CEND}"
                         else
