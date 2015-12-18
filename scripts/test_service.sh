@@ -29,7 +29,7 @@ fi
 #verification qu'il y a bien une variable passée en paramètre
 if [ -z "$1" ]
 then
-	echo "Aucun utilisateur spécifié, arrêt de test_service.sh!"
+	echo -e "${CRED}Aucun utilisateur spécifié, arrêt de test_service.sh!${CEND}"
 	exit
 fi
 
@@ -40,8 +40,8 @@ TEST=$(ps aux | grep "$1" | grep SCREEN | tr -s " " | cut -d " " -f13)
 
 if [ -z "$TEST" ]
 then
-        echo "Service Down..."
-        echo "Redemarrage de $SERVICE"
+        echo -e "${CRED}Service Down...${CEND}"
+        echo -e "${CRED}Redemarrage de $SERVICE${CEND}"
         "$BASEPATH"/"$SCRIPTS"/reboot_rtorrent.sh "$1"
 
         #pause pour laisser le temps au service de demarrer proprement
@@ -50,6 +50,6 @@ then
 elif [ "$SERVICE" = "$TEST" ]
 then
 
-        echo "Service Up"
+        echo -e "${CGREEN}Service rtorrent Up${CEND}"
 
 fi

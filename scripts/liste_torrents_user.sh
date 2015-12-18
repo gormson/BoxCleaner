@@ -28,7 +28,7 @@ fi
 #verification qu'il y a bien une variable passée en paramètre
 if [ -z "$1" ]
 then
-        echo "Aucun utilisateur spécifié, arrêt de liste_torrents_user.sh!"
+        echo -e "${CRED}Aucun utilisateur spécifié, arrêt de liste_torrents_user.sh!${CEND}"
         exit
 fi
 
@@ -41,6 +41,7 @@ then
 	rm "$BASEPATH"/"$DEBUG"/debug_"$1".new
 fi
 
+echo -e "${CGREEN}Récupération de la liste des torrents${CEND}"
 #Recuperation de l'ensemble des HASH des torrents presents dans rutorrent/rtorrent pour un utilisateur
 for hash_torrent in $(xmlrpc localhost/"$1" download_list | grep Index | cut -d\' -f2)
 do
@@ -59,6 +60,8 @@ done < "$BASEPATH/$DEBUG/debug_$1" > "$BASEPATH"/"$DEBUG"/debug_"$1".new
 
 rm "$BASEPATH"/"$DEBUG"/debug_"$1"
 
+echo -e "${CGREEN}Liste des torrents pour $1${CEND}"
+echo ""
 #Affichage du rapport
 more "$BASEPATH"/"$DEBUG"/debug_"$1".new
 

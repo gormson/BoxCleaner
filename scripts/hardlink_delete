@@ -29,7 +29,7 @@ fi
 #verification qu'il y a bien une variable passée en paramètre
 if [ -z "$1" ]
 then
-        echo "Aucun fichier ou dossier spécifié, arrêt de hardlink_delete!"
+        echo -e "${CRED}Aucun fichier ou dossier spécifié, arrêt de hardlink_delete!${CEND}"
         exit
 fi
 
