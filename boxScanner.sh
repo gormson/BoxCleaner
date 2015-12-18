@@ -8,6 +8,8 @@
 #		écart entre rutorrent et leur /home/			#
 # Input : $1 - Fichier contenant la liste des utilisateurs (1 user par 	#
 #		ligne uniquement)					#
+#	  $2 - Fichier contenant l'arborescence à parcourir pour les 	#
+#		différents users
 # Auteur : GorMsoN							#
 #									#
 #########################################################################
@@ -24,40 +26,40 @@ then
         exit
 else
         #Inclusion des variables globales
-	echo "Initilialisation des variables globales :"
 	# shellcheck disable=SC1091
-        source default.conf
+	source default.conf
+	echo -e "${CRED}Initilialisation des variables globales${CEND}"
 fi
 
 #verification qu'il y a bien une variable passée en paramètre
 if [ -z "$1" ]
 then
-        echo "Aucune liste d'utilisateurs spécifié, arrêt de boxScanner.sh!"
+        echo -e "${CRED}Aucune liste d'utilisateurs spécifié, arrêt de boxScanner.sh!${CEND}"
         exit
 fi
 
 #verification qu'il y a bien une variable passée en paramètre
 if [ ! $# -eq 2 ]
 then
-        echo "Nombre d'arguments user_boxScanner.sh non conforme, arrêt de boxScanner.sh!"
+        echo -e "${CRED}Nombre d'arguments user_boxScanner.sh non conforme, arrêt de boxScanner.sh!${CEND}"
         exit
 elif [ ! -f "${1}" ]
 then
-        echo "La liste d'utilisateurs spécifié n'existe pas, arrêt de boxScanner.sh!"
+        echo -e "${CRED}La liste d'utilisateurs spécifié n'existe pas, arrêt de boxScanner.sh!${CEND}"
         exit
 elif [ ! -f "${2}" ]
 then
-        echo "Le fichier d'arborescence spécifié n'existe pas, arrêt de boxScanner.sh!"
+        echo -e "${CRED}Le fichier d'arborescence spécifié n'existe pas, arrêt de boxScanner.sh!${CEND}"
         exit
 fi
 
 #Test d'intégrité de l'arborescence
 "$BASEPATH"/"$SCRIPTS"/test_arbo.sh
 
-echo "Chemin d'installation : $BASEPATH"
-echo "Repertoire de travail : $TMP"
-echo "Repertoire de stockage des rapports : $RAPPORTS"
-echo "Nettoyage des Rapports Admin..."
+echo -e "${CBLUE}Chemin d'installation : $BASEPATH${CEND}"
+echo -e "${CBLUE}Repertoire de travail : $TMP${CEND}"
+echo -e "${CBLUE}Repertoire de stockage des rapports : $RAPPORTS${CEND}"
+echo -e "${CBLUE}Nettoyage des Rapports Admin...${CEND}"
 
 #on vérifie si un rapport admin existe pour le supprimer
 if [ -f "$BASEPATH"/"$RAPPORTS"/rapport_admin ]
@@ -71,21 +73,23 @@ then
         rm "$BASEPATH"/"$RAPPORTS"/cummul_admin
 fi
 
-echo "Début de l'analyse"
+echo -e "${CBLUE}Début de l'analyse${CEND}"
 #on lance pour chaque utilisateur le script de listing des ecarts
 for user in $(more "$1")
 do
-	echo "$(date) : Traitement utilisateur $user..."
+	printf "${CYELLOW}%s : Traitement utilisateur %s...${CEND}" "$(date)" "$user"
 	"$BASEPATH"/user_boxScanner.sh "$user" "${2}" > /dev/null 2>&1
 
 done 
 
-printf "Espace disque total gaspillé : " >> "$BASEPATH"/"$RAPPORTS"/rapport_admin
-xargs --arg-file="$BASEPATH"/"$RAPPORTS"/cummul_admin -0 --delimiter=\\n du -hsc | tail -1 | cut -f1 >> "$BASEPATH"/"$RAPPORTS"/rapport_admin
+{
+	printf "Espace disque total gaspillé : "
+	xargs --arg-file="$BASEPATH"/"$RAPPORTS"/cummul_admin -0 --delimiter=\\n du -hsc | tail -1 | cut -f1
+} >> "$BASEPATH"/"$RAPPORTS"/rapport_admin
 
 #Colorisation du rapport et mise à disposition sur une page html
-echo "Création de la page rapport_admin.html"
+echo -e "${CBLUE}Création de la page rapport_admin.html${CEND}"
 ccze -h < "$BASEPATH"/"$RAPPORTS"/rapport_admin > "$PATHHTML"/rapport_admin.html
 
 tail -1 "$BASEPATH"/"$RAPPORTS"/rapport_admin
-echo "Fin de l'analyse..."
+echo -e "${CGREEN}Fin de l'analyse...${CEND}"
