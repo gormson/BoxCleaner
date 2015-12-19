@@ -260,7 +260,7 @@ else
 		fi
 
 		#Suppression des lignes de configuration utilisateur par défaut pour les remplacer par celles de l'installation courante
-		tac "$CHEMIN"/default.conf | sed '1,2d' | tac > "$CHEMIN"/default.conf.new
+		tac "$CHEMIN"/default.conf | sed '1,3d' | tac > "$CHEMIN"/default.conf.new
 		rm  "$CHEMIN"/default.conf
 		more "$CHEMIN"/default.conf.new > "$CHEMIN"/default.conf
 		rm "$CHEMIN"/default.conf.new
@@ -274,8 +274,8 @@ else
 		} >> "$CHEMIN"/default.conf
 
 		echo ""
-		echo -e "${CBLUE}Rappel de la configuration :${CEND}"
-		echo -e "${CBLUE}____________________________${CEND}"
+		echo -e "${CRED}Rappel de la configuration :${CEND}"
+		echo -e "${CRED}____________________________${CEND}"
 		echo ""
 		echo -e "${CYELLOW}>>> utilisateurs.list${CEND}"
 		more $CHEMIN/utilisateurs.list
