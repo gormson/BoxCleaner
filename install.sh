@@ -189,9 +189,11 @@ else
 		DOSSIER="temp"
 		echo ""
 		echo -e "${CBLUE}Création de la liste des répertoires...${CEND}"
-		echo -e "${CYELLOW}Nom du dossier dans /home/user/ par exemple${CEND}"
-		echo -e "${CYELLOW}	Pour /home/user/torrents/ 	rentrez torrents${CEND}"
-		echo -e "${CYELLOW}	Pour /home/user/torrents/tv/	rentrez torrents/tv${CEND}"
+		echo -e "${CRED}Renseignez les répertoires où sont téléchargés les torrents et devant être scannés${CEND}"
+		echo -e "${CRED}Si un répertoire n'est pas renseigné, il ne sera pas scanné et pourra donc, à tort, remonter des écarts${CEND}"
+		echo -e "${CYELLOW}Nom du dossier de téléchargement dans /home/user/, comme par exemple : ${CEND}"
+		echo -e "${CYELLOW}	Pour prendre en compte /home/user/torrents/ 	rentrez torrents${CEND}"
+		echo -e "${CYELLOW}	Pour prendre en compte /home/user/torrents/tv/	rentrez torrents/tv${CEND}"
                 while [ ! -z "$DOSSIER" ]
                 do
                         printf "\n"
