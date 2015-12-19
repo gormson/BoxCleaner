@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Répertoire d'installation par défaut
-CHEMIN="/opt/"
+CHEMIN="/opt"
 #Chemin d'installation complet
 BASEPATH="$CHEMIN"/"boxCleaner"
 #Répertoire des fichiers de configuration Nginx"
@@ -260,10 +260,10 @@ else
 		fi
 
 		#Suppression des lignes de configuration utilisateur par défaut pour les remplacer par celles de l'installation courante
-		tac default.conf | sed '1,2d' | tac > default.conf.new
-		rm default.conf
-		more default.conf.new > default.conf
-		rm default.conf.new
+		tac "$BASEPATH"/default.conf | sed '1,2d' | tac > "$BASEPATH"/default.conf.new
+		rm  "$BASEPATH"/default.conf
+		more "$BASEPATH"/default.conf.new > "$BASEPATH"/default.conf
+		rm "$BASEPATH"/default.conf.new
 
 		echo ""
 		echo -e "${CBLUE}Ajout des paramètres à default.conf${CEND}"
@@ -275,6 +275,8 @@ else
 
 		echo ""
 		echo -e "${CBLUE}Rappel de la configuration :${CEND}"
+		echo -e "${CBLUE}____________________________${CEND}"
+		echo ""
 		echo -e "${CYELLOW}>>> utilisateurs.list${CEND}"
 		more $CHEMIN/utilisateurs.list
 		echo -e -n "${CYELLOW}Appuyez sur Entrer pour continuer...${CEND}"
