@@ -126,7 +126,7 @@ else
         			printf " 	server_name localhost;\n"
 			} >> "$NGINX"/boxCleaner.conf
 		else
-			echo -e "${CRED}Un fichier boxCleaner.sh existe déjà!${CEND}"
+			echo -e "${CRED}Un fichier boxCleaner.conf existe déjà!${CEND}"
 			echo -e "${CRED}Le fichier va être mis de côté (boxCleaner_$(date "+%Y%m%d_%H%M%S").bak)${CEND}"
 			mv "$NGINX"/boxCleaner.conf "$NGINX"/boxCleaner_$(date "+%Y%m%d_%H%M%S").bak
 			touch "$NGINX"/boxCleaner.conf
@@ -260,10 +260,10 @@ else
 		fi
 
 		#Suppression des lignes de configuration utilisateur par défaut pour les remplacer par celles de l'installation courante
-		tac "$BASEPATH"/default.conf | sed '1,2d' | tac > "$BASEPATH"/default.conf.new
-		rm  "$BASEPATH"/default.conf
-		more "$BASEPATH"/default.conf.new > "$BASEPATH"/default.conf
-		rm "$BASEPATH"/default.conf.new
+		tac "$CHEMIN"/default.conf | sed '1,2d' | tac > "$CHEMIN"/default.conf.new
+		rm  "$CHEMIN"/default.conf
+		more "$CHEMIN"/default.conf.new > "$CHEMIN"/default.conf
+		rm "$CHEMIN"/default.conf.new
 
 		echo ""
 		echo -e "${CBLUE}Ajout des paramètres à default.conf${CEND}"
