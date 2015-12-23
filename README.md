@@ -40,5 +40,5 @@ BoxCleaner propose un script d'installation automatique et de configuration de l
 
 ## Complément.
 
-Pour plus de détail rendez-vous ici : https://mondedie.fr/viewtopic.php?id=7542
+Pour plus de détails rendez-vous ici : https://mondedie.fr/viewtopic.php?id=7542
 
