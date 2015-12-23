@@ -1,4 +1,3 @@
-# A METTRE A JOUR
 # BoxCleaner
 
 ## Avant-Propos
