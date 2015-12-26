@@ -84,7 +84,12 @@ else
 		echo -e "${CYELLOW}cp -r ../BoxCleaner $CHEMIN${CEND}"
 		cp -r ../BoxCleaner/* "$CHEMIN"
 
-		 #On rend exécutable les scripts
+                echo ""
+                echo -e "${CBLUE}Recopie du .git et .gitingore${CEND}"
+                echo -e "${CYELLOW}cp -r ../BoxCleaner/.git* $CHEMIN${CEND}"
+                cp -r ../BoxCleaner/.git* "$CHEMIN"
+
+		#On rend exécutable les scripts
 		echo ""
 		echo -e "${CBLUE}Passage des scripts en executables${CEND}"
 		echo -e "${CYELLOW}chmod +x $CHEMIN/*.sh && chmod +x $CHEMIN/scripts/*.sh{CEND}"
