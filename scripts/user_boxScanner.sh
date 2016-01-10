@@ -61,7 +61,7 @@ echo -e "${CBLUE}Extraction de la liste des torrents${CEND}"
 #Recuperation de l'ensemble des HASH des torrents presents dans rutorrent/rtorrent pour un utilisateur
 for hash_torrent in $(xmlrpc localhost/"$1" download_list | grep Index | cut -d\' -f2)
 do
-	xmlrpc localhost/"$1" d.get_base_path "$hash_torrent" | grep "String\:" | cut -d\' -f2 >> "$BASEPATH"/"$TMP"/filepathrutorrent_"$1"
+	xmlrpc localhost/"$1" d.get_base_path "$hash_torrent" | grep "String\:" | cut -c 10- | sed 's/.\{1\}$//g' >> "$BASEPATH"/"$TMP"/filepathrutorrent_"$1"
 done
 
 #Au cas où on supprime les lignes vide du fichier

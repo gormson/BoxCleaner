@@ -58,7 +58,7 @@ do
 	        echo "Date : $(date)" >> "$BASEPATH"/"$LOG"/boxCleaner.log
 		echo "Type : Suppression Inode $inode" >> "$BASEPATH"/"$LOG"/boxCleaner.log
 		echo "Fichier :  $(find /home/ -inum "$inode")" >> "$BASEPATH"/"$LOG"/boxCleaner.log
-        	find /home/ -inum "$inode" -exec rm -i "{}" \;
+        	find /home/ -inum "$inode" -exec rm "{}" \;
 
 		#Verification de la bonne suppression du fichier
 		if [ -f "$1" ]
