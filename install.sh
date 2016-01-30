@@ -121,6 +121,17 @@ else
                         touch "$CHEMIN"/repertoires.list
                 fi
 
+                #Création de la liste des répertoires_plex
+                if  [ ! -f "$CHEMIN"/repertoires_plex.list ]
+                then
+                        touch "$CHEMIN"/repertoires_plex.list
+                else
+                        echo -e "${CRED}Un fichier repertoires_plex.list existe déjà!${CEND}"
+                        echo -e "${CRED}Le fichier va être mis de côté (repertoires_plex_$(date "+%Y%m%d_%H%M%S").bak)${CEND}"
+                        mv "$CHEMIN"/repertoires_plex.list "$CHEMIN"/repertoires_plex_$(date "+%Y%m%d_%H%M%S").bak
+                        touch "$CHEMIN"/repertoires_plex.list
+                fi
+
 		#Création du fichier de conf Nginx
 		if [ ! -f "$NGINX"/boxCleaner.conf ]
 		then
@@ -226,6 +237,41 @@ else
 			fi
 		done
 
+		DOSSIER="temp"
+		echo ""
+		echo -e "${CBLUE}Création de la liste des répertoires Plex...${CEND}"
+		echo -e "${CRED}Renseignez les répertoires où sont stockés les fichiers indéxés par Plex et devant être scannés${CEND}"
+		echo -e "${CYELLOW}Nom du dossier Plex dans /home/user/, comme par exemple : ${CEND}"
+		echo -e "${CYELLOW}	Pour prendre en compte /home/user/termines/ 	rentrez termines${CEND}"
+		echo -e "${CYELLOW}	Pour prendre en compte /home/user/termines/tv/	rentrez termines/tv${CEND}"
+                while [ ! -z "$DOSSIER" ]
+                do
+                        printf "\n"
+			echo -e -n "${CGREEN} Dossier (Vide pour arrêter): ${CEND}"
+                        read -r DOSSIER
+
+                        #Vérification de la présence du dossier specifié par l'utilisateur
+                        if [ -z "$DOSSIER" ]
+                        then
+                                echo -e "${CBLUE}Fin de l'enregistrement des répertoires${CEND}"
+                        elif [ ! -d "/home/$(head -1 $CHEMIN/utilisateurs.list)/$DOSSIER" ]
+			then
+				echo -e "${CRED}>>> Le dossier /home/$(head -1 $CHEMIN/utilisateurs.list)/$DOSSIER n'existe pas!${CEND}"
+				echo -e "${CRED}>>> Dossier non ajouté à repertoires.list${CEND}"
+			else
+				#pour que le script boxScanner fonctionne correctement, il ne doit pas y avoir de / à la fin 
+				if [ "${DOSSIER: -1}" = "/" ]
+				then
+					printf "${CGREEN}>>> Dossier %b : OK${CEND}\n" "${DOSSIER%/}"
+					printf "%b\n" "${DOSSIER%/}" >> $CHEMIN/repertoires_plex.list
+				else
+					echo -e "${CGREEN}>>> Dossier $DOSSIER : OK${CEND}"
+					printf "%b\n" "$DOSSIER" >> $CHEMIN/repertoires_plex.list
+				fi
+			fi
+		done
+
+
 		echo ""
 		echo -e "${CBLUE}Vérification de la correspondance entre :${CEND}"
 		echo -e "${CYELLOW}	- utilisateurs.list${CEND}"
@@ -244,6 +290,25 @@ else
 			done < "$CHEMIN"/repertoires.list
 
 		done < "$CHEMIN"/utilisateurs.list
+
+                echo ""
+                echo -e "${CBLUE}Vérification de la correspondance entre :${CEND}"
+                echo -e "${CYELLOW}     - utilisateurs.list${CEND}"
+                echo -e "${CYELLOW}     - repertoires_plex.list${CEND}"
+
+                while IFS="" read -r utilisateur || [[ -n "$utilisateur" ]]
+                do
+                        while IFS="" read -r repertoire || [[ -n "$repertoire" ]]
+                        do
+                                if [ ! -d /home/"$utilisateur"/"$repertoire" ]
+                                then
+                                        printf "${CYELLOW}Check /home/%b/%b${CEND}                                      : ${CRED}Erreur${CEND}\n" "$utilisateur" "$repertoire"
+                                else
+                                        printf "${CYELLOW}Check /home/%b/%b${CEND}                                      : ${CGREEN}OK${CEND}\n" "$utilisateur" "$repertoire"
+                                fi
+                        done < "$CHEMIN"/repertoires_plex.list
+
+                done < "$CHEMIN"/utilisateurs.list
 
 		echo ""
 		echo -e "${CBLUE}Vérification de la présence du répertoire $LOGSERVER${CEND}"
@@ -293,6 +358,11 @@ else
 		more $CHEMIN/repertoires.list
 		echo -e -n "${CYELLOW}Appuyez sur Entrer pour continuer...${CEND}"
 		read
+                echo ""
+                echo -e "${CYELLOW}>>> repertoires_plex.list${CEND}"
+                more $CHEMIN/repertoires_plex.list
+                echo -e -n "${CYELLOW}Appuyez sur Entrer pour continuer...${CEND}"
+                read
 		echo ""
 		echo -e "${CYELLOW}>>> boxCleaner.conf${CEND}"
 		more $NGINX/boxCleaner.conf
