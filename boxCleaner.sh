@@ -25,7 +25,7 @@ else
 fi
 
 CHOIX="Temp"
-while [ ! "$CHOIX" == "9" ]
+while [ ! "$CHOIX" == "10" ]
 do
 clear
 echo -e "${CRED}
@@ -45,7 +45,8 @@ ${CEND}"
 	echo -e "${CBLUE}6 - Tester si rtorrent/rutorrent est actif pour un utilisateur${CEND}"
 	echo -e "${CBLUE}7 - Relancer le service rtorrent pour un utilisateur${CEND}"
 	echo -e "${CBLUE}8 - Supprimer complétement un fichier/dossier (Hardlink compris)${CEND}"
-	echo -e "${CBLUE}9 - Quitter BoxCleaner${CEND}"
+        echo -e "${CBLUE}9 - Recherche des doublons${CEND}"
+	echo -e "${CBLUE}10 - Quitter BoxCleaner${CEND}"
 	echo ""
 	echo -e -n "${CYELLOW}>>> Selectionnez une option : ${CEND}"
 	read -r CHOIX
@@ -200,7 +201,29 @@ case $CHOIX in
 		echo -e -n "${CYELLOW}Appuyez sur Entrer pour continuer...${CEND}"
                 read
                 ;;
-	9)
+        9)
+                if [ -f "$BASEPATH"/utilisateurs.list ] && [ -f "$BASEPATH"/repertoires.list ] && [ -f "$BASEPATH"/repertoires_plex.list ]
+                then
+                        "$BASEPATH"/"$SCRIPTS"/boxCheckDoublon.sh utilisateurs.list repertoires.list repertoires_plex.list
+                else
+                        if [ ! -f "$BASEPATH"/utilisateurs.list ]
+                        then
+                                echo -e "${CRED}Erreur : Le fichier utilisateurs.list n'existe pas!${CEND}"
+                        fi
+                        if [ ! -f "$BASEPATH"/repertoires.list ]
+                        then
+                                echo -e "${CRED}Erreur : Le fichier repertoires.list n'existe pas!${CEND}"
+                        fi
+                        if [ ! -f "$BASEPATH"/repertoires_plex.list ]
+                        then
+                                echo -e "${CRED}Erreur : Le fichier repertoires.list n'existe pas!${CEND}"
+                        fi
+                fi
+                echo -e -n "${CYELLOW}Appuyez sur Entrer pour continuer...${CEND}"
+                read
+                ;;
+
+	10)
 		echo -e "${CGREEN}BoxCleaner... ByeBye ;-)${CEND}"
 		;;
 	*)
